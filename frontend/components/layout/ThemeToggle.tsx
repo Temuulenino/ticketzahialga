@@ -1,12 +1,17 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { motion } from 'framer-motion'
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme()
-  const isDark = theme === 'dark'
+  const { resolvedTheme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => setMounted(true), [])
+
+  const isDark = resolvedTheme === 'dark'
 
   return (
     <motion.button
@@ -17,13 +22,13 @@ export function ThemeToggle() {
       aria-label="Дүр солих"
     >
       <motion.div
-        key={isDark ? 'moon' : 'sun'}
+        key={mounted ? (isDark ? 'moon' : 'sun') : 'placeholder'}
         initial={{ rotate: -90, opacity: 0 }}
         animate={{ rotate: 0, opacity: 1 }}
         exit={{ rotate: 90, opacity: 0 }}
         transition={{ duration: 0.2 }}
       >
-        {isDark ? <Moon size={16} /> : <Sun size={16} />}
+        {mounted ? (isDark ? <Moon size={16} /> : <Sun size={16} />) : <Sun size={16} />}
       </motion.div>
     </motion.button>
   )

@@ -99,15 +99,16 @@ export function clearAuthCookies() {
 export function getApiErrorMessage(error: unknown): string {
   if (axios.isAxiosError(error)) {
     const data = error.response?.data
-    if (data?.message) return data.message
-    if (typeof data?.detail === 'string') return data.detail
     if (data?.errors && typeof data.errors === 'object') {
       const firstKey = Object.keys(data.errors)[0]
       const firstError = data.errors[firstKey]
-      return Array.isArray(firstError) ? firstError[0] : firstError
+      const msg = Array.isArray(firstError) ? firstError[0] : firstError
+      if (msg && typeof msg === 'string') return msg
     }
+    if (data?.message && data.message !== 'Validation error' && data.message !== 'An error occurred') return data.message
+    if (typeof data?.detail === 'string') return data.detail
   }
-  return 'Something went wrong. Please try again.'
+  return 'Алдаа гарлаа. Дахин оролдоно уу.'
 }
 
 export default api

@@ -52,8 +52,8 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="mn" suppressHydrationWarning className={inter.variable}>
-      <body className="min-h-screen font-sans antialiased">
+    <html lang="mn" suppressHydrationWarning data-scroll-behavior="smooth" className={inter.variable}>
+      <body className="min-h-screen font-sans antialiased" suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <Providers>
             <Navbar />
