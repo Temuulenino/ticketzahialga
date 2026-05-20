@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 import { Search, Menu, X, Ticket, User, LogOut, Settings, LayoutDashboard, ChevronDown } from 'lucide-react'
 import { useAuthStore } from '@/store/auth.store'
 import { useAuth } from '@/hooks/useAuth'
@@ -57,8 +58,17 @@ export function Navbar() {
           {/* Лого */}
           <Link href="/" className="flex items-center gap-2.5 group">
             <div className="relative">
-              <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-glow group-hover:shadow-glow-pink transition-all duration-300">
-                <Ticket size={18} className="text-white" />
+              <div className="w-9 h-9 rounded-2xl overflow-hidden shadow-glow group-hover:shadow-glow-pink transition-all duration-300 bg-gradient-to-br from-primary-500 to-accent-500">
+                <Image
+                  src="https://picsum.photos/seed/ticketpro-icon/36/36"
+                  alt="TicketPro"
+                  width={36}
+                  height={36}
+                  className="w-full h-full object-cover mix-blend-overlay opacity-70"
+                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Ticket size={16} className="text-white drop-shadow" />
+                </div>
               </div>
             </div>
             <span className="text-xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-white/70 bg-clip-text text-transparent">

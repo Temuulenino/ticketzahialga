@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { Search, Sparkles, ArrowRight, Music, Palette, Trophy } from 'lucide-react'
+import Image from 'next/image'
 import { Button } from '@/components/ui/Button'
 
 const floatingIcons = [
@@ -28,6 +29,15 @@ export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Арын зураг */}
+      <div className="absolute inset-0">
+        <Image
+          src="https://picsum.photos/seed/concert-hero-bg/1920/1080"
+          alt=""
+          fill
+          className="object-cover opacity-20"
+          priority
+        />
+      </div>
       <div className="absolute inset-0 bg-hero-gradient" />
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-600/20 rounded-full blur-3xl animate-pulse-slow" />

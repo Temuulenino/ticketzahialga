@@ -4,8 +4,25 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Calendar, MapPin, Ticket, TrendingUp, Star } from 'lucide-react'
-import { Event } from '@/types/event.types'
+import { Event, CategoryType } from '@/types/event.types'
 import { formatDate, formatCurrency, cn } from '@/lib/utils'
+
+const CATEGORY_IMAGE_SEEDS: Record<CategoryType | 'default', string> = {
+  concert: 'concert-crowd-music',
+  festival: 'outdoor-festival-lights',
+  sports: 'sports-stadium-crowd',
+  theater: 'theater-stage-curtain',
+  museum: 'museum-art-gallery',
+  entertainment: 'entertainment-show-stage',
+  live_show: 'live-performance-night',
+  other: 'event-celebration',
+  default: 'event-venue-crowd',
+}
+
+function getCategoryFallback(categoryType?: string): string {
+  const seed = CATEGORY_IMAGE_SEEDS[(categoryType as CategoryType) ?? 'default'] ?? CATEGORY_IMAGE_SEEDS.default
+  return `https://picsum.photos/seed/${seed}/600/400`
+}
 
 interface EventCardProps {
   event: Event
@@ -40,19 +57,13 @@ export function EventCard({ event, index = 0, featured = false }: EventCardProps
         >
           {/* Постер */}
           <div className="relative h-52 overflow-hidden bg-slate-100 dark:bg-slate-800">
-            {event.poster_url ? (
-              <Image
-                src={event.poster_url}
-                alt={event.title}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              />
-            ) : (
-              <div className="w-full h-full bg-gradient-to-br from-primary-900/50 to-accent-900/50 flex items-center justify-center">
-                <Ticket size={40} className="text-white/20" />
-              </div>
-            )}
+            <Image
+              src={event.poster_url || getCategoryFallback(event.category?.type)}
+              alt={event.title}
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            />
 
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
